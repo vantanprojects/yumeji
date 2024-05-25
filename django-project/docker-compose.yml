@@ -49,8 +49,7 @@ services:
     networks:
       django_network:
         ipv4_address: ${DJANGO_ADDR}
-#    image: app:django
-    # command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
 networks:
   django_network:
     driver: bridge
