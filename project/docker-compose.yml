@@ -1,0 +1,33 @@
+version: '3'
+
+volumes:
+  mysql_data:
+
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: yumejidb
+      MYSQL_USER: yumejiuser
+      MYSQL_PASSWORD: yumejipassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    container_name: yumeji
+    build:
+      context: .
+      dockerfile: ./containers/dockerfile
+    command: bash -c "python manage.py wait_for_db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./code:/code
+      - ./logs/django:/logme
+    ports:
+      - 8080:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://yumejiuser:yumejipassword@db:3306/yumejidb
