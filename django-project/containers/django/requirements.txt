@@ -1,0 +1,5 @@
+Django
+channels
+channels-redis
+django-widgets-improved
+psycopg2-binary
