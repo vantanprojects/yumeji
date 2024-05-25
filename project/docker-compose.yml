@@ -1,0 +1,37 @@
+version: '3'
+
+volumes:
+  mysql_data:
+
+services:
+  db:
+    container_name: db
+    image: mysql:8.0.28
+    restart: always
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: "django-db"
+      TZ: 'Asia/Tokyo'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/sql:/docker-entrypoint-initdb.d
+
+  app:
+    container_name: yumeji
+    build:
+      context: .
+      dockerfile: ./containers/dockerfile
+    command: bash -c "python yumeji/wait_for_db.py && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./code:/code
+      - ./logs/django:/logme
+    ports:
+      - 8080:8000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://django:django@db:3306/django-db
