@@ -3,3 +3,5 @@ channels
 channels-redis
 django-widgets-improved
 mysqlclient
+django-allauth
+django-crispy-forms

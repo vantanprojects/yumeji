@@ -1,0 +1,35 @@
+{% extends "account/base.html" %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block link %}<link rel="stylesheet" type="text/css" href="{% static 'css/account/login.css' %}">{% endblock %}
+{% block title %}{% block type %}ログイン{% endblock %}{% endblock %}
+
+
+{% block form %}
+    <form class="login" id="login_form" method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        <div class="form__div">
+            {% render_field form.login class+="form__input" placeholder=" " %}
+            <span for="" class="form__label">ユーザー名またはメールアドレス</span>
+        </div>
+        <div class="form__div nomargin">
+            {% render_field form.password class+="form__input" placeholder=" " %}
+            <span for="" class="form__label">パスワード</span>
+        </div>
+        <div class="sub_buttons">
+            <a class="forgot_password" href="{% url 'account_reset_password' %}">パスワードを忘れた場合</a>
+            <label for="switch" class="switch remember">
+                <div style="position: relative;">
+                    {% render_field form.remember id="switch" %}
+                    <div class="switch_base"></div>
+                    <div class="switch_circle"></div>
+                </div>
+                <span>アカウントを記憶</span>
+            </label>
+        </div>
+        <button type="submit", class="main_button">ログイン</button>
+        <a href="{% url 'account_signup' %}" class="signup">アカウントをお持ちでない場合 ></a>
+    </form>
+{% endblock %}
