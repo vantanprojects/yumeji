@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'widget_tweaks',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -159,3 +160,7 @@ LOGIN_REDIRECT_URL = '/index/'  # ログイン後のリダイレクト先
 ACCOUNT_LOGOUT_REDIRECT_URL = '/account/login/'  # 　ログアウト後のリダイレクト先
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_FORMS = {
+    'login': 'accounts.forms.CustomLoginForm',
+}

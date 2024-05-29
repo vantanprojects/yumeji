@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/account/base.css' %}">
+    {% block link %}{% endblock %}
+    <title>{% block title %}{% endblock title %} - YUMEJI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="frame">
+            <span class="title">{% block type %}{% endblock type %}</span>
+            {% block form %}{% endblock form %}
+        </div>
+    </div>
+    <img src="{% static 'images/account/background.png' %}" class="background">
+    <div class="alert-errors">
+        {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert-error">
+                <strong>エラー:{{ field.name }}<br>{{ error }}</strong>
+            </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert-error">
+            <strong>エラー:{{ field.name }}<br>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

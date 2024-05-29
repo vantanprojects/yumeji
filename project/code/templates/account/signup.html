@@ -1,0 +1,33 @@
+{% extends "account/base.html" %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block link %}<link rel="stylesheet" type="text/css" href="{% static 'css/account/signup.css' %}">{% endblock %}
+{% block title %}{% block type %}サインアップ{% endblock %}{% endblock %}
+
+
+{% block form %}
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        <div class="form__div">
+            {% render_field form.username class+="form__input" placeholder=" " %}
+            <span for="" class="form__label">ユーザー名</span>
+        </div>
+        <div class="form__div">
+            {% render_field form.email class+="form__input" placeholder=" " %}
+            <span for="" class="form__label">メールアドレス</span>
+        </div>
+        <div class="form__div nomargin">
+            {% render_field form.password1 class+="form__input" placeholder=" " %}
+            <span for="" class="form__label">パスワード</span>
+        </div>
+        <div class="form__div nomargin">
+            {% render_field form.password1 class+="form__input" placeholder=" " %}
+            <span for="" class="form__label">パスワード(確認用)</span>
+        </div>
+        <!-- <button type="button" class="main_button">続行</button> -->
+        <button type="submit" class="main_button">登録を完了</button>
+        <a href="{% url 'account_login' %}" class="login">アカウントをすでにお持ちですか?</a>
+    </form>
+{% endblock %}
